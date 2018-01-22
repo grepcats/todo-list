@@ -1,7 +1,6 @@
 var itemArray = [];
 var completedArray = [];
-var listItem = "";
-var i = -1;
+
 
 //Todo constructor
 function Todo(item, completion) {
@@ -10,12 +9,13 @@ function Todo(item, completion) {
 }
 
 function createList(item, completion) {
-  listItem = new Todo(item, completion);
+  var listItem = new Todo(item, completion);
   itemArray.push(listItem);
   return itemArray;
 }
 //to remove item
 function removeItem(doneItemText) {
+  var i = -1;
   var index = 0;
   itemArray.forEach(function(item) {
     i++;
@@ -23,9 +23,10 @@ function removeItem(doneItemText) {
       return index = i;
     }
   });
-
-  var removedItem = itemArray.splice(index, 1);
-  completedArray.push(removedItem); 
+  var removedItem = itemArray[index];
+  itemArray.splice(index, 1);
+  completedArray.push(removedItem);
+  i = -1;
 }
 
 
@@ -34,10 +35,26 @@ $(document).ready(function() {
     event.preventDefault();
     var inputItem = $("input#todo-item").val();
 
-    $("ul").append("<li><input type='checkbox' name='todo' value='" + inputItem + "'>" + inputItem + "</li>");
+    $("ul").append("<li>" + inputItem + "</li>")
+    createList(inputItem, false);
+
+    $("li").unbind().click(function() {
+      debugger;
+      removeItem($(this).text());
+      $(this).remove();
+
+    })
+
+    $("#todo-item").val("");
 
 
-    console.log($("input:checkbox[name=todo]:checked").val());
+
+
+    //$("ul").append("<li><input type='checkbox' name='todo' value='" + inputItem + "'>" + inputItem + "</li>");
+
+    //$("input:checkbox[name=todo]:checked").val()
+
+    //console.log($("input:checkbox[name=todo]:checked").val());
 
   });
 });
