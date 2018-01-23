@@ -3,13 +3,14 @@ var completedArray = [];
 
 
 //Todo constructor
-function Todo(item, completion) {
+function Todo(item, completion, date) {
   this.itemText = item;
   this.completedBool = completion;
+  this.date = date;
 }
 
-function createList(item, completion) {
-  var listItem = new Todo(item, completion);
+function createList(item, completion, date) {
+  var listItem = new Todo(item, completion, date);
   itemArray.push(listItem);
   return itemArray;
 }
@@ -25,7 +26,9 @@ function removeItem(doneItemText) {
   });
   var removedItem = itemArray[index];
   itemArray.splice(index, 1);
+  removedItem.completedBool = true;
   completedArray.push(removedItem);
+
   i = -1;
 }
 
@@ -34,27 +37,23 @@ $(document).ready(function() {
   $("#todo-list").submit(function(event) {
     event.preventDefault();
     var inputItem = $("input#todo-item").val();
+    var inputDate = $("input#todo-date").val();
 
-    $("ul").append("<li>" + inputItem + "</li>")
-    createList(inputItem, false);
-
+    $("#yourToDoList").append("<li>" + inputItem + ", complete by: " + inputDate + "</li>")
+    createList(inputItem, false, inputDate);
+    $("#todo-item").val("");
     $("li").unbind().click(function() {
-      debugger;
+
       removeItem($(this).text());
       $(this).remove();
-
-    })
-
-    $("#todo-item").val("");
+      $("#completedTasks").append("<li>" + $(this).text() +  "</li>");
 
 
+    });
 
-
-    //$("ul").append("<li><input type='checkbox' name='todo' value='" + inputItem + "'>" + inputItem + "</li>");
-
-    //$("input:checkbox[name=todo]:checked").val()
-
-    //console.log($("input:checkbox[name=todo]:checked").val());
+    // completedArray.forEach(function(item){
+    // //  $("#completedTasks").children("li").remove();
+    //   $("#completedTasks").append("<li>" + item.itemText + "</li>");
 
   });
 });

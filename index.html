@@ -16,11 +16,22 @@
           <label for="todo-item">Enter a thing to do</label>
           <input type="text" id="todo-item" class="form-control">
         </div>
+        <div class="form-group">
+          <label for="todo-date">Complete by</label>
+          <input type="date" id="todo-date" class="form-control">
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       <h2>Your To Do List</h2>
-      <ul class="undecorated">
+      <ul class="undecorated" id="yourToDoList">
       </ul>
+
+      <div class="completed">
+        <h2>Completed Tasks</h2>
+        <ul class="undecorated" id="completedTasks">
+        </ul>
+      </div>
+
     </div>
   </body>
 </html>
